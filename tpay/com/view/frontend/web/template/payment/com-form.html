@@ -1,0 +1,149 @@
+<!--
+/**
+ * tpay_com Template
+ *
+ * @category    tpay
+ * @package     tpay_com
+ * @author      Ivan Weiler & Stjepan Udovičić
+ * @copyright   tpay (http://tpay.net)
+ * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+
+<div class="payment-method" data-bind="css: {'_active': (getCode() == isChecked())}">
+    <div class="payment-method-title field choice">
+        <input type="radio"
+               name="payment[method]"
+               class="radio"
+               data-bind="attr: {'id': getCode()}, value: getCode(), checked: isChecked, click: selectPaymentMethod, visible: isRadioButtonVisible()"/>
+        <label data-bind="attr: {'for': getCode()}" class="label"><span data-bind="text: getTitle()"></span></label>
+    </div>
+    <div class="payment-method-content">
+        <image src="https://tpay.com/img/banners/tpay-przezroczyste-logo-85x24.png" ></image>
+        <!-- ko foreach: getRegion('messages') -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+        <!--/ko-->
+        <div class="payment-method-billing-address">
+<script type="text/javascript">
+           function blikjs(str) {
+            alert('jest');
+            var xhttp;
+            if (str.length == 1) {
+            document.getElementById("txtHint").innerHTML = "zero";
+            return;
+            }
+            xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("txtHint").innerHTML = this.responseText;
+            }
+            };
+            xhttp.open("GET", "blik.php?blikcode="+str, true);
+            xhttp.send();
+            });
+
+</script>
+        </div>
+        <label>Type your blik code or choose standard payment method</label>
+        <form class="blik-form" id="blik-form" name="blik-form" data-bind="onsubmit: blikjs2()">
+            <input type="text" id="blikcode" name="blikcode"/>
+            <input type="text" id="txt1" onkeyup="blikjs(this.value)"/>
+            <label for="txt1">test</label>
+            <label for="blikcode">Blik code</label>
+            <p class="cart_navigation">
+            <button type="submit"
+                    id="button_send"
+                    class="action primary checkout"
+                   >
+                <span data-bind="text: $t('Pay with blik')"></span>
+                </button>
+
+            </p>
+        </form>
+
+        <label>
+        Suggestions2: <span id="txtHint"></span>
+        </label>
+
+        <div id="content">
+
+        <label>Pay with e-transfer</label>
+        <style type="text/css">
+            .checked_v {
+                box-shadow: 0px 0px 10px 3px #15428F ;
+
+            }
+            .channel {
+                display: inline-block;
+                width: 140px;
+                height:70px;
+                margin: 13px 20px 0px 0;
+                text-align:center;
+            }
+        </style>
+
+        <form class="form" action="https://secure.tpay.com/" data-bind="attr: {'id': getCode() + '-form'}">
+
+            <div name="fields" id="fields" data-bind="value: getProperties()"></div>
+
+
+
+
+            <input type="hidden" id="koko"  name="koko" value="1">
+
+
+
+
+            <input type="hidden" id="channel"  name="kanal" value=" ">
+
+            <div id="kanaly_v" data-bind="value: showChannels()" ></div>
+
+
+
+            <p class="checkbox" style="margin: 20px 0 25px 0;">
+                <input id="akceptuje_regulamin"  type="checkbox" checked="checked" value="1" name="akceptuje_regulamin">
+                <label for="akceptuje_regulamin">
+                    Akceptuję <a target="_blank" href="https://secure.tpay.com/regulamin.pdf"><b>regulamin</b></a> serwisu Tpay.com</label></p>
+
+            <p class="cart_navigation">
+                <button class="action primary checkout"
+                        type="submit"
+                >
+                    <a href="#" class="button" onclick="$('#transferujForm').submit(); return false;"></a>
+                    <span data-bind="text: $t('Pay with tpay')"></span>
+                </button>
+            </p>
+
+        </form>
+            <button class="action primary checkout"
+                    type="button"
+                    data-bind="
+                    click: afterPlaceOrder"
+            >
+                <a href="#" class="button" ></a>
+                <span data-bind="text: $t('Pay with tpay2')"></span>
+            </button>
+
+        <div class="checkout-agreements-block">
+
+            <!-- ko foreach: $parent.getRegion('before-place-order') -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+        <div class="actions-toolbar">
+            <div class="primary">
+                <button class="action primary checkout"
+                        type="submit"
+                        data-bind="
+                        click: placeOrder,
+                        attr: {title: $t('Continue to tpay')},
+                        css: {disabled: !isPlaceOrderActionAllowed()},
+                        enable: (getCode() == isChecked())
+                        "
+                        disabled>
+                    <span data-bind="text: $t('Continue to tpay')"></span>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>

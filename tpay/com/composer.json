@@ -1,0 +1,20 @@
+{
+    "name": "tpay/com",
+    "description": "com integration for Magento 2",
+    "type": "magento2-module",
+    "version": "dev-master",
+    "license": [
+        "OSL-3.0"
+    ],
+    "require": {
+        "com/com-php": "2.*"
+    },
+    "extra": {
+        "map": [
+            [
+                "*",
+                "tpay/com"
+            ]
+        ]
+    }
+}
