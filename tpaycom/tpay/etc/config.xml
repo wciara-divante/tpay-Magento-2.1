@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--
+/**
+* @category    payment gateway
+* @package     tpaycom_tpay
+* @author      tpay.com
+* @copyright   (https://tpay.com)
+*/
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <payment>
+            <tpaycom_tpay>
+                <active>0</active>
+                <model>tpaycom\tpay\Model\Tpay</model>
+                <payment_action>authorize_capture</payment_action>
+                <title>tpay.com - szybkie płatności online</title>
+                <allowspecific>0</allowspecific>
+                <show_payment_channels>1</show_payment_channels>
+                <blik_level_zero>0</blik_level_zero>
+                <min_order_total>0.10</min_order_total>
+            </tpaycom_tpay>
+        </payment>
+    </default>
+</config>

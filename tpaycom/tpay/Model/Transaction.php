@@ -1,0 +1,124 @@
+<?php
+
+/**
+ * @category    payment gateway
+ * @package     tpaycom_tpay
+ * @author      tpay.com
+ * @copyright   (https://tpay.com)
+ */
+
+namespace tpaycom\tpay\Model;
+
+use tpaycom\tpay\lib\Curl;
+
+/**
+ * Class Transaction
+ * @package tpaycom\tpay\Model
+ */
+class Transaction
+{
+
+    /** API tpay.com url
+     *
+     * @var string
+     */
+
+    private $urlApi = 'https://secure.transferuj.pl/api/gw';
+
+    /** Blik channel id in tpay.com
+     *
+     * @var string
+     */
+
+    const  BLIK_CHANNEL = '64';
+
+    /** API password
+     *
+     * @var  string
+     */
+
+    private $apiPassword;
+
+    /** API key
+     *
+     * @var string
+     */
+
+    private $apiKey;
+
+    public function __construct($apiPassword, $apiKey)
+    {
+        $this->apiKey = $apiKey;
+
+        $this->apiPassword = $apiPassword;
+    }
+
+    /** Generate transaction for BLIK
+     *  Return id transaction or false
+     *
+     * @param $transactions_data
+     * @return bool|string
+     */
+    public function createBlikTransaction($transactionData)
+    {
+        $transactionData['api_password'] = $this->apiPassword;
+        $transactionData['kanal'] = static::BLIK_CHANNEL;
+        $transactionData['json'] = '1';
+
+        $url = $this->urlApi . '/' . $this->apiKey . '/transaction/create';
+
+        $response = Curl::doCurlRequest($url, $transactionData);
+
+        if (!$response) {
+            return false;
+        }
+
+        return $this->blikTransactionResult($response);
+    }
+
+    /** Check response for created BLIK transaction.
+     *
+     * @param $response
+     * @return bool|string
+     */
+
+    private function blikTransactionResult($response)
+    {
+        $response = json_decode($response);
+
+        if ((string)$response->result !== '1') {
+            return false;
+        }
+
+        return (string)$response->title;
+    }
+
+    /**  Send BLIK code for a generated transaction
+     *
+     * @param $transactionId
+     * @param $blikCode
+     * @return bool
+     */
+
+    public function sendBlikCode($transactionId, $blikCode)
+    {
+        $transactionData['code'] = $blikCode;
+        $transactionData['title'] = $transactionId;
+        $transactionData['api_password'] = $this->apiPassword;
+        $url = $this->urlApi . '/' . $this->apiKey . '/transaction/blik';
+        libxml_disable_entity_loader(true);
+        $response = Curl::doCurlRequest($url, $transactionData);
+
+        if (!$response) {
+            return false;
+        }
+
+        $xml = new \SimpleXMLElement($response);
+
+        if ((string)$xml->result !== '1') {
+            return false;
+        }
+
+        return true;
+    }
+}
