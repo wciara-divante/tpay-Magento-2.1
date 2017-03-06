@@ -24,7 +24,6 @@ define(
             },
 
 
-
             afterPlaceOrder: function () {
                 window.location.replace(window.checkoutConfig.tpay.payment.redirectUrl);
             },
@@ -64,7 +63,7 @@ define(
 
             getData: function () {
                 var parent = this._super(),
-                paymentData = {};
+                    paymentData = {};
                 paymentData['kanal'] = $('input[name="channel"]').val();
                 paymentData['blik_code'] = $('input[name="blik_code"]').val();
                 paymentData['akceptuje_regulamin'] = $('input[name="akceptuje_regulamin"]').val();

@@ -1,0 +1,26 @@
+<?php
+/*
+* This file is part of the "PhpStorm" package.
+*
+* (c) Divante Sp. z o. o.
+*
+* Author: Oleksandr Yeremenko <oyeremenko@divante.pl>
+* Date: 06/02/17 11:30 AM
+*
+* For the full copyright and license information, please view the LICENSE
+* file that was distributed with this source code.
+*/
+
+/** @var $block \tpaycom\tpay\Block\Payment\tpay\Redirect\Form */
+
+// @codingStandardsIgnoreFile
+?>
+<form action="<?php echo $block->getAction() ?>" method="post" id="tpaycom_tpay_checkout" name="tpaycom_tpay_checkout">
+    <?php foreach ($block->getTpayData() as $field => $value) : ?>
+        <input type="hidden" name="<?php echo $block->escapeHtml($field) ?>" id="<?php echo $block->escapeHtml($field) ?>" value="<?php echo $block->escapeHtml($value) ?>">
+    <?php endforeach; ?>
+    <?php foreach ($block->getAdditionalInformation() as $field => $value) : ?>
+        <input type="hidden" name="<?php echo $block->escapeHtml($field) ?>" id="<?php echo $block->escapeHtml($field) ?>" value="<?php echo $block->escapeHtml($value) ?>">
+    <?php endforeach; ?>
+    <input type="submit" value="<?php echo __('Redirect me to tpay.com.') ?>" id="submit_btn" name="redirect" align="center">
+</form>

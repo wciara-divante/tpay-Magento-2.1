@@ -11,9 +11,10 @@
     </div>
     <div class="payment-method-content">
 
-        <div class = "blik" display="none">
+        <div class="blik" display="none">
             <div id="input_container">
-                <input type="text" class="blik_code_input" id="blik_code_input" name="blik_code" value="" maxlength="6" pattern=".{6,}" title="Kod blik powinien składać się z 6 cyfr!"/>
+                <input type="text" class="blik_code_input" id="blik_code_input" name="blik_code" value="" maxlength="6"
+                       pattern=".{6,}" title="Kod blik powinien składać się z 6 cyfr!"/>
                 <p class="blik">Wpisz 6-cyfrowy <b>kod BLIK</b> wygenerowany w Twojej aplikacji bankowej</p>
                 <img
                         data-bind="
@@ -25,7 +26,7 @@
         </div>
 
         <div id="payment_form_tpaycom_tpay" style="padding-left:15px;">
-            <input type="hidden" id="channel"  name="channel" value=" ">
+            <input type="hidden" id="channel" name="channel" value=" ">
             <div id="channels" class="channels"></div>
         </div>
 
@@ -46,7 +47,7 @@
         </div>
 
         </br>
-            <p data-bind="html: getTerms()"></p>
+        <p data-bind="html: getTerms()"></p>
         </br>
         <div class="actions-toolbar">
             <div class="primary">

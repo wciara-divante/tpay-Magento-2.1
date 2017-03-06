@@ -10,18 +10,19 @@
 namespace tpaycom\tpay\lib;
 
 /**
- * Class Fields
+ * Class Validate
  *
  * Include methods responsible for receiving and validating input data
  *
- **/
+ * @package tpaycom\tpay\lib
+ */
 class Validate
 {
     /**
      * Check one field form
      *
-     * @param string $name field name
-     * @param mixed $value field value
+     * @param string $name  field name
+     * @param mixed  $value field value
      *
      * @return bool
      *
@@ -51,9 +52,12 @@ class Validate
         return true;
     }
 
-    /** Check that the field is correct
-     * @param mixed $value field value
-     * @param string $name field name
+    /**
+     * Check that the field is correct
+     *
+     * @param mixed  $value field value
+     * @param string $name  field name
+     *
      * @throws TException
      */
     public static function fieldValidation($value, $name)
@@ -82,13 +86,15 @@ class Validate
         }
     }
 
-    /** Check lenght of field
+    /**
+     * Check length of field
+     *
      * @param string $validator requeries for field
-     * @param mixed $value field value
-     * @param string $name field name
+     * @param mixed  $value     field value
+     * @param string $name      field name
+     *
      * @throws TException
      */
-
     public static function fieldLengthValidation($validator, $value, $name)
     {
         if (strpos($validator, 'maxlenght') === 0) {
@@ -107,16 +113,15 @@ class Validate
      * Check all variables required in response
      * Parse variables to valid types
      *
-     * @param string $paymentType
      * @param null $params array
+     *
      * @return array
      * @throws TException
      */
-
     public static function getResponse($params = null)
     {
-        $ready = array();
-        $missed = array();
+        $ready          = [];
+        $missed         = [];
         $responseFields = ResponseFieldsSettings::$fields;
 
         foreach ($responseFields as $fieldName => $field) {
@@ -157,8 +162,8 @@ class Validate
     /**
      * Check if variable is uint
      *
-     * @param mixed $value variable to check
-     * @param string $name field name
+     * @param mixed  $value variable to check
+     * @param string $name  field name
      *
      * @throws TException
      */
@@ -176,8 +181,8 @@ class Validate
     /**
      * Check if variable is float
      *
-     * @param mixed $value variable to check
-     * @param string $name field name
+     * @param mixed  $value variable to check
+     * @param string $name  field name
      *
      * @throws TException
      */
@@ -195,8 +200,8 @@ class Validate
     /**
      * Check if variable is string
      *
-     * @param mixed $value variable to check
-     * @param string $name field name
+     * @param mixed  $value variable to check
+     * @param string $name  field name
      *
      * @throws TException
      */
@@ -207,12 +212,11 @@ class Validate
         }
     }
 
-
     /**
      * Check if variable is valid email list
      *
-     * @param mixed $value variable to check
-     * @param string $name field name
+     * @param mixed  $value variable to check
+     * @param string $name  field name
      *
      * @throws TException
      */
@@ -234,26 +238,25 @@ class Validate
     /**
      * Check if variable has expected value
      *
-     * @param mixed $value variable to check
-     * @param array $options available options
-     * @param string $name field name
+     * @param mixed  $value   variable to check
+     * @param array  $options available options
+     * @param string $name    field name
      *
      * @throws TException
      */
     private static function validateOptions($value, $options, $name)
     {
         if (!in_array($value, $options, true)) {
-            throw new TException(sprintf('Field "%s" has unsupperted value', $name));
+            throw new TException(sprintf('Field "%s" has unsupported value', $name));
         }
     }
-
 
     /**
      * Check variable max lenght
      *
-     * @param mixed $value variable to check
-     * @param int $max max lenght
-     * @param string $name field name
+     * @param mixed  $value variable to check
+     * @param int    $max   max lenght
+     * @param string $name  field name
      *
      * @throws TException
      */
@@ -269,9 +272,9 @@ class Validate
     /**
      * Check variable min length
      *
-     * @param mixed $value variable to check
-     * @param int $min min length
-     * @param string $name field name
+     * @param mixed  $value variable to check
+     * @param int    $min   min length
+     * @param string $name  field name
      *
      * @throws TException
      */

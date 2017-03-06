@@ -1,0 +1,35 @@
+<?php
+/*
+* This file is part of the "PhpStorm" package.
+*
+* (c) Divante Sp. z o. o.
+*
+* Author: Oleksandr Yeremenko <oyeremenko@divante.pl>
+* Date: 05/02/17 2:16 PM
+*
+* For the full copyright and license information, please view the LICENSE
+* file that was distributed with this source code.
+*/
+
+/** @var $block \tpaycom\tpay\Block\Payment\tpay\Redirect */
+
+// @codingStandardsIgnoreFile
+?>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+</head>
+<body>
+<div align="center">
+    <?php echo __("In order to complete the payment you will be redirected to tpay.com. Click button below if you were not redirected automatically") ?>
+    <br>
+    <?php echo $block->getFormHtml() ?>
+    <script type="text/javascript">
+        <?php // Equivalent of domReady exec ?>
+        (function() {
+            document.getElementById("tpaycom_tpay_checkout").submit();
+        })();
+    </script>
+</div>
+</body>
+</html>
