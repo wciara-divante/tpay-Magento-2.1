@@ -1,15 +1,11 @@
 <?php
-/*
-* This file is part of the "TPay" package.
-*
-* (c) Divante Sp. z o. o.
-*
-* Author: Oleksandr Yeremenko <oyeremenko@divante.pl>
-* Date: 01/02/17 10:25 AM
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+/**
+ *
+ * @category    payment gateway
+ * @package     Tpaycom_Magento2.1
+ * @author      Tpay.com
+ * @copyright   (https://tpay.com)
+ */
 
 namespace tpaycom\tpay\Controller\tpay;
 
@@ -38,11 +34,6 @@ class Notification extends Action
      * @var RemoteAddress
      */
     protected $remoteAddress;
-
-    /**
-     * @var bool
-     */
-    protected $validParams = false;
 
     /**
      * @var bool

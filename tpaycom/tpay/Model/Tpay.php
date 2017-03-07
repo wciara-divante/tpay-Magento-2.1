@@ -1,9 +1,9 @@
 <?php
-
 /**
+ *
  * @category    payment gateway
- * @package     tpaycom_tpay
- * @author      tpay.com
+ * @package     Tpaycom_Magento2.1
+ * @author      Tpay.com
  * @copyright   (https://tpay.com)
  */
 
@@ -114,14 +114,6 @@ class Tpay extends AbstractMethod implements TpayInterface
     }
 
     /**
-     * @return Session
-     */
-    protected function getCheckout()
-    {
-        return $this->checkoutSession;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function getRedirectURL()
@@ -206,25 +198,6 @@ class Tpay extends AbstractMethod implements TpayInterface
     }
 
     /**
-     * Check that the  BLIK should be available for order/quote amount
-     *
-     * @return bool
-     */
-    protected function checkBlikAmount()
-    {
-        $amount = $this->getCheckout()->getQuote()->getBaseGrandTotal();
-
-        if (!$amount) {
-            $orderId = $this->getCheckout()->getLastRealOrderId();
-            $order   = $this->orderRepository->getByIncrementId($orderId);
-            $amount  = $order->getGrandTotal();
-        }
-        $amount = number_format($amount, 2);
-
-        return (bool)($amount > $this->minAmountBlik);
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function getTermsURL()
@@ -237,11 +210,7 @@ class Tpay extends AbstractMethod implements TpayInterface
      */
     public function getTpayFormData($orderId = null)
     {
-        if ($orderId === null) {
-            $orderId = $this->getCheckout()->getLastRealOrderId();
-        }
-
-        $order          = $this->orderRepository->getByIncrementId($orderId);
+        $order          = $this->getOrder($orderId);
         $billingAddress = $order->getBillingAddress();
         $amount         = number_format($order->getGrandTotal(), 2);
         $merchantId     = $this->getMerchantId();
@@ -249,7 +218,7 @@ class Tpay extends AbstractMethod implements TpayInterface
         $crc            = base64_encode($orderId);
         $md5sum         = md5($merchantId.$amount.$crc.$securityCode);
         $name           = $billingAddress->getData('firstname').' '.$billingAddress->getData('lastname');
-        $data           = [
+        return [
             'id'           => $merchantId,
             'email'        => $this->escaper->escapeHtml($order->getCustomerEmail()),
             'nazwisko'     => $this->escaper->escapeHtml($name),
@@ -265,8 +234,6 @@ class Tpay extends AbstractMethod implements TpayInterface
             'pow_url'      => $this->urlBuilder->getUrl('tpay/tpay/success'),
             'online'       => $this->onlyOnlineChannels() ? '1' : '0',
         ];
-
-        return $data;
     }
 
     /**
@@ -305,22 +272,6 @@ class Tpay extends AbstractMethod implements TpayInterface
     }
 
     /**
-     * Availability for currency
-     *
-     * @param string $currencyCode
-     *
-     * @return bool
-     */
-    protected function isAvailableForCurrency($currencyCode)
-    {
-        if (!in_array($currencyCode, $this->availableCurrencyCodes)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function assignData(DataObject $data)
@@ -344,5 +295,60 @@ class Tpay extends AbstractMethod implements TpayInterface
         );
 
         return $this;
+    }
+
+    /**
+     * @return Session
+     */
+    protected function getCheckout()
+    {
+        return $this->checkoutSession;
+    }
+
+    /**
+     * Availability for currency
+     *
+     * @param string $currencyCode
+     *
+     * @return bool
+     */
+    protected function isAvailableForCurrency($currencyCode)
+    {
+        if (!in_array($currencyCode, $this->availableCurrencyCodes)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Check that the  BLIK should be available for order/quote amount
+     *
+     * @return bool
+     */
+    protected function checkBlikAmount()
+    {
+        $amount = $this->getCheckout()->getQuote()->getBaseGrandTotal();
+
+        if (!$amount) {
+            $orderId = $this->getCheckout()->getLastRealOrderId();
+            $order   = $this->orderRepository->getByIncrementId($orderId);
+            $amount  = $order->getGrandTotal();
+        }
+        $amount = number_format($amount, 2);
+
+        return (bool)($amount > $this->minAmountBlik);
+    }
+
+    /**
+     * @return Order
+     */
+    protected function getOrder($orderId = null)
+    {
+        if ($orderId === null) {
+            $orderId = $this->getCheckout()->getLastRealOrderId();
+        }
+
+        return $this->orderRepository->getByIncrementId($orderId);
     }
 }

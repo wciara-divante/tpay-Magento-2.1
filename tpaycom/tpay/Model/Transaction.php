@@ -1,9 +1,9 @@
 <?php
-
 /**
+ *
  * @category    payment gateway
- * @package     tpaycom_tpay
- * @author      tpay.com
+ * @package     Tpaycom_Magento2.1
+ * @author      Tpay.com
  * @copyright   (https://tpay.com)
  */
 
@@ -82,23 +82,7 @@ class Transaction
         return $this->blikTransactionResult($response);
     }
 
-    /**
-     * Check response for created BLIK transaction.
-     *
-     * @param $response
-     *
-     * @return bool|string
-     */
-    private function blikTransactionResult($response)
-    {
-        $response = json_decode($response);
 
-        if ((string)$response->result !== '1') {
-            return false;
-        }
-
-        return (string)$response->title;
-    }
 
     /**
      * Send BLIK code for a generated transaction
@@ -130,5 +114,23 @@ class Transaction
         }
 
         return true;
+    }
+
+    /**
+     * Check response for created BLIK transaction.
+     *
+     * @param $response
+     *
+     * @return bool|string
+     */
+    private function blikTransactionResult($response)
+    {
+        $response = json_decode($response);
+
+        if ((string)$response->result !== '1') {
+            return false;
+        }
+
+        return (string)$response->title;
     }
 }

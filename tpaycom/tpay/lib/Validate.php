@@ -131,20 +131,7 @@ class Validate
                 }
             } else {
                 $val = Util::post($fieldName, Type::STRING);
-                switch ($field[FieldProperties::TYPE]) {
-                    case Type::STRING:
-                        $val = (string)$val;
-                        break;
-                    case Type::INT:
-                        $val = (int)$val;
-                        break;
-                    case Type::FLOAT:
-                        $val = (float)$val;
-                        break;
-                    default:
-                        throw new TException(sprintf('unknown field type in getResponse - field name= %s', $fieldName));
-                }
-                $ready[$fieldName] = $val;
+                $ready[$fieldName] = $this->getFieldValue($field, $val);
             }
         }
 
@@ -313,6 +300,33 @@ class Validate
         if (!is_string($merchantSecret) || strlen($merchantSecret) === 0) {
             throw new TException('Invalid secret code');
         }
+    }
+
+    /**
+     * Return field value
+     *
+     * @param $field array
+     * @param $val mixed
+     * @return mixed
+     * @throws TException
+     */
+    private function getFieldValue($field, $val)
+    {
+        switch ($field[FieldProperties::TYPE]) {
+            case Type::STRING:
+                $val = (string)$val;
+                break;
+            case Type::INT:
+                $val = (int)$val;
+                break;
+            case Type::FLOAT:
+                $val = (float)$val;
+                break;
+            default:
+                throw new TException(sprintf('unknown field type in getResponse - field name= %s', $fieldName));
+        }
+
+        return $val;
     }
 
 }

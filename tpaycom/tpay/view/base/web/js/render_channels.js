@@ -1,3 +1,10 @@
+/**
+ *
+ * @category    payment gateway
+ * @package     Tpaycom_Magento2.1
+ * @author      Tpay.com
+ * @copyright   (https://tpay.com)
+ */
 require(['jquery'], function ($) {
 
     function ShowChannelsCombo() {
@@ -25,10 +32,8 @@ require(['jquery'], function ($) {
             if (!blik) {
                 $("html,body").animate({scrollTop: $('body').height() - 150}, 600);
             }
-            ;
         });
     }
-
 
     function showBlikInput(kanal) {
         if (window.checkoutConfig.tpay.payment.blikStatus !== true) {
@@ -77,7 +82,6 @@ require(['jquery'], function ($) {
     }
 
     jQuery.getScript("https://secure.tpay.com/channels-" + window.checkoutConfig.tpay.payment.merchantId + showOnlyOnlinePayments() + ".js", function () {
-
         ShowChannelsCombo()
         CheckBlikLevelZeroAsDefault()
     });

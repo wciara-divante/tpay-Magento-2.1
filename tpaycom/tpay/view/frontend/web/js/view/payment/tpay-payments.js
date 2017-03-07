@@ -1,10 +1,10 @@
 /**
+ *
  * @category    payment gateway
- * @package     tpaycom_tpay
- * @author      tpay.com
+ * @package     Tpaycom_Magento2.1
+ * @author      Tpay.com
  * @copyright   (https://tpay.com)
- */
-/*browser:true*/
+ *//*browser:true*/
 /*global define*/
 define(
     [

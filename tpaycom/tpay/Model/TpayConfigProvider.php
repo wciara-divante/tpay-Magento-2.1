@@ -1,15 +1,11 @@
 <?php
-/*
-* This file is part of the "TPay" package.
-*
-* (c) Divante Sp. z o. o.
-*
-* Author: Oleksandr Yeremenko <oyeremenko@divante.pl>
-* Date: 07/02/17 11:06 AM
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
+/**
+ *
+ * @category    payment gateway
+ * @package     Tpaycom_Magento2.1
+ * @author      Tpay.com
+ * @copyright   (https://tpay.com)
+ */
 
 namespace tpaycom\tpay\Model;
 
@@ -54,18 +50,6 @@ class TpayConfigProvider implements ConfigProviderInterface
     ) {
         $this->assetRepository = $assetRepository;
         $this->paymentHelper   = $paymentHelper;
-    }
-
-    /**
-     * @return TpayInterface|MethodInterface
-     */
-    protected function getPaymentMethodInstance()
-    {
-        if (null === $this->paymentMethod) {
-            $this->paymentMethod = $this->paymentHelper->getMethodInstance(TpayInterface::CODE);
-        }
-
-        return $this->paymentMethod;
     }
 
     /**
@@ -163,5 +147,17 @@ class TpayConfigProvider implements ConfigProviderInterface
     public function generateURL($name)
     {
         return $this->assetRepository->createAsset($name)->getUrl();
+    }
+
+    /**
+     * @return TpayInterface|MethodInterface
+     */
+    protected function getPaymentMethodInstance()
+    {
+        if (null === $this->paymentMethod) {
+            $this->paymentMethod = $this->paymentHelper->getMethodInstance(TpayInterface::CODE);
+        }
+
+        return $this->paymentMethod;
     }
 }
