@@ -56,16 +56,6 @@ class Redirect extends Template
     }
 
     /**
-     * {@inheritdoc}
-     */
-    protected function _construct()
-    {
-        $this->setTemplate('tpaycom_tpay::redirect.phtml');
-
-        parent::_construct();
-    }
-
-    /**
      * @param int $orderId
      *
      * @return $this
@@ -106,6 +96,16 @@ class Redirect extends Template
             ->setAdditionalInformation($this->additionalPaymentInformation);
 
         return $formBlock->toHtml();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function _construct()
+    {
+        $this->setTemplate('tpaycom_tpay::redirect.phtml');
+
+        parent::_construct();
     }
 
     /**

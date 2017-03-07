@@ -109,27 +109,18 @@ class TpayService
             if ($order->getState() != Order::STATE_PROCESSING) {
                 $emailNotify = true;
             }
-
-            $order->addStatusToHistory(
-                Order::STATE_PROCESSING,
-                __('The payment from tpay.com has been accepted.').'</br>'.$transactionDesc,
-                true
-            );
-
-            $order->setState(Order::STATE_PROCESSING);
+            $status = __('The payment from tpay.com has been accepted.').'</br>'.$transactionDesc;
+            $state = Order::STATE_PROCESSING;
         } else {
             if ($order->getState() != Order::STATE_HOLDED) {
                 $emailNotify = true;
             }
-
-            $order->addStatusToHistory(
-                Order::STATE_HOLDED,
-                __('Payment has been canceled: ').'</br>'.$transactionDesc,
-                true
-            );
-
-            $order->setState(Order::STATE_HOLDED);
+            $status = __('Payment has been canceled: ').'</br>'.$transactionDesc;
+            $state = Order::STATE_HOLDED;
         }
+
+        $order->setState($state);
+        $order->addStatusToHistory($state, $status, true);
 
         if ($emailNotify) {
             $order->setSendEmail(true);

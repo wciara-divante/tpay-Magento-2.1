@@ -131,7 +131,7 @@ class Validate
                 }
             } else {
                 $val = Util::post($fieldName, Type::STRING);
-                $ready[$fieldName] = $this->getFieldValue($field, $val);
+                $ready[$fieldName] = static::getFieldValue($field, $val);
             }
         }
 
@@ -310,7 +310,7 @@ class Validate
      * @return mixed
      * @throws TException
      */
-    private function getFieldValue($field, $val)
+    private static function getFieldValue($field, $val)
     {
         switch ($field[FieldProperties::TYPE]) {
             case Type::STRING:
@@ -328,5 +328,4 @@ class Validate
 
         return $val;
     }
-
 }

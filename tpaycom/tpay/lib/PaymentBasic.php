@@ -103,27 +103,7 @@ class PaymentBasic
         return $res;
     }
 
-    /**
-     * Check md5 sum to validate tpay.com response.
-     * The values of variables that md5 sum includes are available only for
-     * merchant and tpay.com system.
-     *
-     * @param string $md5sum            md5 sum received from tpay.com
-     * @param string $transactionId     transaction id
-     * @param float  $transactionAmount transaction amount
-     * @param string $crc               transaction crc
-     *
-     * @return bool
-     */
-    private function checkMD5($md5sum, $transactionId, $transactionAmount, $crc)
-    {
-        if (!is_string($md5sum) || strlen($md5sum) !== 32) {
-            return false;
-        }
 
-        return
-            ($md5sum === md5($this->merchantId.$transactionId.$transactionAmount.$crc.$this->merchantSecret));
-    }
 
     /**
      * Check md5 sum to confirm value of payment amount
@@ -156,5 +136,27 @@ class PaymentBasic
         }
 
         return true;
+    }
+
+    /**
+     * Check md5 sum to validate tpay.com response.
+     * The values of variables that md5 sum includes are available only for
+     * merchant and tpay.com system.
+     *
+     * @param string $md5sum            md5 sum received from tpay.com
+     * @param string $transactionId     transaction id
+     * @param float  $transactionAmount transaction amount
+     * @param string $crc               transaction crc
+     *
+     * @return bool
+     */
+    private function checkMD5($md5sum, $transactionId, $transactionAmount, $crc)
+    {
+        if (!is_string($md5sum) || strlen($md5sum) !== 32) {
+            return false;
+        }
+
+        return
+            ($md5sum === md5($this->merchantId.$transactionId.$transactionAmount.$crc.$this->merchantSecret));
     }
 }

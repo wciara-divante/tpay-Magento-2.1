@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * @category    payment gateway
  * @package     Tpaycom_Magento2.1
  * @author      Tpay.com

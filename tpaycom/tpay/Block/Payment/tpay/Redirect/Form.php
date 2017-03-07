@@ -39,16 +39,6 @@ class Form extends Template
     protected $additionalInformation = [];
 
     /**
-     * {@inheritdoc}
-     */
-    protected function _construct()
-    {
-        $this->setTemplate('tpaycom_tpay::redirect/form.phtml');
-
-        parent::_construct();
-    }
-
-    /**
      * @return int
      */
     public function getOrderId()
@@ -126,5 +116,15 @@ class Form extends Template
     public function getAdditionalInformation()
     {
         return $this->additionalInformation;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function _construct()
+    {
+        $this->setTemplate('tpaycom_tpay::redirect/form.phtml');
+
+        parent::_construct();
     }
 }
