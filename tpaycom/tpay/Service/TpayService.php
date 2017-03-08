@@ -105,7 +105,7 @@ class TpayService
         $trStatus        = $validParams[ResponseFields::TR_STATUS];
         $emailNotify     = false;
 
-        if ($trStatus === 'TRUE' && ($validParams[ResponseFields::TR_AMOUNT] === $orderAmount)) {
+        if ($trStatus === 'TRUE' && ($validParams[ResponseFields::TR_PAID] === $orderAmount)) {
             if ($order->getState() != Order::STATE_PROCESSING) {
                 $emailNotify = true;
             }
