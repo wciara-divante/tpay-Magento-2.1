@@ -229,6 +229,7 @@ class Tpay extends AbstractMethod implements TpayInterface
             'adres'        => $this->escaper->escapeHtml($order->getBillingAddress()->getData('street')),
             'miasto'       => $this->escaper->escapeHtml($order->getBillingAddress()->getData('city')),
             'kod'          => $this->escaper->escapeHtml($order->getBillingAddress()->getData('postcode')),
+            'kraj'         => $this->escaper->escapeHtml($order->getBillingAddress()->getCountryModel()->getName()),
             'pow_url_blad' => $this->urlBuilder->getUrl('tpay/tpay/error'),
             'wyn_url'      => $this->urlBuilder->getUrl('tpay/tpay/notification'),
             'pow_url'      => $this->urlBuilder->getUrl('tpay/tpay/success'),
