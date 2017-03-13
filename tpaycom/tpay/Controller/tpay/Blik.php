@@ -94,10 +94,10 @@ class Blik extends Action
             $this->checkoutSession->unsQuoteId();
 
             if (!$result) {
-                return $this->_redirect('tpay/tpay/Error');
+                return $this->_redirect('tpay/tpay/error');
             }
 
-            return $this->_redirect('tpay/tpay/Success');
+            return $this->_redirect('tpay/tpay/success');
         }
     }
 

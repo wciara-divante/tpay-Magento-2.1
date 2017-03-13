@@ -5,10 +5,11 @@
  * @author      Tpay.com
  * @copyright   (https://tpay.com)
  */
-require(['jquery'], function ($) {
+require(['jquery', 'mage/translate'], function ($, $t) {
 
     function ShowChannelsCombo() {
-        var str = '<p><strong>Wybierz jeden ze sposobów płatnośći:</strong></p><div id="kanal"></div>';
+       var title  = $t('Choose payment method');
+        var str = '<p><strong>' + title + ':</strong></p><div id="kanal"></div>';
 
         for (var i = 0; i < tr_channels.length; i++) {
             if (addChannelToList(tr_channels[i]) === true) {
